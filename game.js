@@ -4,7 +4,7 @@
 // =========================================
 
 // Get the canvas
-const canvas = document.getElementById("renderCanvas");
+const canvas = document.getElementById('renderCanvas');
 
 // Create Babylon Engine
 const engine = new BABYLON.Engine(canvas, true);
@@ -14,29 +14,23 @@ const engine = new BABYLON.Engine(canvas, true);
 // =========================================
 
 const createScene = () => {
-
     // Create Scene
     const scene = new BABYLON.Scene(engine);
 
     // Sky Color
-    scene.clearColor = new BABYLON.Color4(
-        0.55,
-        0.80,
-        1.0,
-        1
-    );
+    scene.clearColor = new BABYLON.Color4(0.55, 0.8, 1.0, 1);
 
     // =====================================
     // Camera
     // =====================================
 
     const camera = new BABYLON.ArcRotateCamera(
-        "camera",
+        'camera',
         -Math.PI / 2,
         Math.PI / 3,
         40,
         new BABYLON.Vector3(0, 5, 0),
-        scene
+        scene,
     );
 
     camera.attachControl(canvas, true);
@@ -49,17 +43,17 @@ const createScene = () => {
     // =====================================
 
     const hemiLight = new BABYLON.HemisphericLight(
-        "hemiLight",
+        'hemiLight',
         new BABYLON.Vector3(0, 1, 0),
-        scene
+        scene,
     );
 
     hemiLight.intensity = 0.9;
 
     const sunLight = new BABYLON.DirectionalLight(
-        "sunLight",
+        'sunLight',
         new BABYLON.Vector3(-1, -2, -1),
-        scene
+        scene,
     );
 
     sunLight.position = new BABYLON.Vector3(20, 40, 20);
@@ -70,51 +64,54 @@ const createScene = () => {
     // =====================================
 
     const ground = BABYLON.MeshBuilder.CreateGround(
-        "ground",
+        'ground',
         {
             width: 200,
-            height: 200
+            height: 200,
         },
-        scene
+        scene,
     );
 
     const groundMaterial = new BABYLON.StandardMaterial(
-        "groundMaterial",
-        scene
+        'groundMaterial',
+        scene,
     );
 
-    groundMaterial.diffuseColor = new BABYLON.Color3(
-        0.2,
-        0.6,
-        0.2
-    );
+    groundMaterial.diffuseColor = new BABYLON.Color3(0.2, 0.6, 0.2);
 
     ground.material = groundMaterial;
     const player = new Player(scene);
+    const movement = new MovementController(player);
 
-    return scene;
+    return {
+        scene,
+        player,
+        movement,
+    };
 };
 
 // Create Scene
-const scene = createScene();
+const game = createScene();
+
+const scene = game.scene;
+const movement = game.movement;
 
 // =========================================
 // Render Loop
 // =========================================
 
 engine.runRenderLoop(() => {
-
+    movement.update();
     scene.render();
 
-    document.getElementById("fps").textContent =
-        "FPS: " + Math.round(engine.getFps());
-
+    document.getElementById('fps').textContent =
+        'FPS: ' + Math.round(engine.getFps());
 });
 
 // =========================================
 // Resize
 // =========================================
 
-window.addEventListener("resize", () => {
+window.addEventListener('resize', () => {
     engine.resize();
 });
