@@ -1,0 +1,119 @@
+// =========================================
+// Shadow Warrior
+// Main Game File
+// =========================================
+
+// Get the canvas
+const canvas = document.getElementById("renderCanvas");
+
+// Create Babylon Engine
+const engine = new BABYLON.Engine(canvas, true);
+
+// =========================================
+// Create Scene
+// =========================================
+
+const createScene = () => {
+
+    // Create Scene
+    const scene = new BABYLON.Scene(engine);
+
+    // Sky Color
+    scene.clearColor = new BABYLON.Color4(
+        0.55,
+        0.80,
+        1.0,
+        1
+    );
+
+    // =====================================
+    // Camera
+    // =====================================
+
+    const camera = new BABYLON.ArcRotateCamera(
+        "camera",
+        -Math.PI / 2,
+        Math.PI / 3,
+        40,
+        new BABYLON.Vector3(0, 5, 0),
+        scene
+    );
+
+    camera.attachControl(canvas, true);
+
+    camera.lowerRadiusLimit = 10;
+    camera.upperRadiusLimit = 80;
+
+    // =====================================
+    // Lighting
+    // =====================================
+
+    const hemiLight = new BABYLON.HemisphericLight(
+        "hemiLight",
+        new BABYLON.Vector3(0, 1, 0),
+        scene
+    );
+
+    hemiLight.intensity = 0.9;
+
+    const sunLight = new BABYLON.DirectionalLight(
+        "sunLight",
+        new BABYLON.Vector3(-1, -2, -1),
+        scene
+    );
+
+    sunLight.position = new BABYLON.Vector3(20, 40, 20);
+    sunLight.intensity = 1.2;
+
+    // =====================================
+    // Ground
+    // =====================================
+
+    const ground = BABYLON.MeshBuilder.CreateGround(
+        "ground",
+        {
+            width: 200,
+            height: 200
+        },
+        scene
+    );
+
+    const groundMaterial = new BABYLON.StandardMaterial(
+        "groundMaterial",
+        scene
+    );
+
+    groundMaterial.diffuseColor = new BABYLON.Color3(
+        0.2,
+        0.6,
+        0.2
+    );
+
+    ground.material = groundMaterial;
+
+    return scene;
+};
+
+// Create Scene
+const scene = createScene();
+
+// =========================================
+// Render Loop
+// =========================================
+
+engine.runRenderLoop(() => {
+
+    scene.render();
+
+    document.getElementById("fps").textContent =
+        "FPS: " + Math.round(engine.getFps());
+
+});
+
+// =========================================
+// Resize
+// =========================================
+
+window.addEventListener("resize", () => {
+    engine.resize();
+});
