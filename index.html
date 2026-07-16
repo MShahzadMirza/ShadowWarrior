@@ -1,30 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shadow Warrior</title>
 
-    <title>Shadow Warrior</title>
+        <!-- CSS -->
+        <link rel="stylesheet" href="style.css" />
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+        <!-- Babylon.js -->
+        <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    </head>
 
-    <!-- Babylon.js -->
-    <script src="https://cdn.babylonjs.com/babylon.js"></script>
-</head>
+    <body>
+        <!-- FPS Counter -->
+        <div id="fps">FPS: 0</div>
 
-<body>
+        <!-- Babylon.js Render Canvas -->
+        <canvas id="renderCanvas"></canvas>
 
-    <!-- FPS Counter -->
-    <div id="fps">FPS: 0</div>
-
-    <!-- Babylon.js Render Canvas -->
-    <canvas id="renderCanvas"></canvas>
-
-    <!-- Main Game Script -->
-    <script src="game.js"></script>
-
-</body>
-
+        <!-- Main Game Script -->
+        <script src="js/player.js"></script>
+        <script src="game.js"></script>
+    </body>
 </html>

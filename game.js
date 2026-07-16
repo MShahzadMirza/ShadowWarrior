@@ -90,6 +90,7 @@ const createScene = () => {
     );
 
     ground.material = groundMaterial;
+    const player = new Player(scene);
 
     return scene;
 };
