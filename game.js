@@ -81,6 +81,23 @@ const createScene = () => {
 
     ground.material = groundMaterial;
     const player = new Player(scene);
+    
+    BABYLON.SceneLoader.ImportMesh(
+        "",
+        "assets/models/",
+        "warrior.glb",
+        scene,
+        function (meshes) {
+
+            const warrior = meshes[0];
+
+            warrior.position = new BABYLON.Vector3(5, 0, 0);
+
+            warrior.scaling = new BABYLON.Vector3(1, 1, 1);
+
+            console.log("Warrior Loaded!");
+        }
+    );
     const movement = new MovementController(player);
 
     return {
