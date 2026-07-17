@@ -81,7 +81,7 @@ const createScene = () => {
 
     ground.material = groundMaterial;
     const player = new Player(scene);
-    
+
     BABYLON.SceneLoader.ImportMesh(
         "",
         "assets/models/",
@@ -90,6 +90,9 @@ const createScene = () => {
         function (meshes) {
 
             const warrior = meshes[0];
+
+            player.model = warrior;
+            player.mesh.isVisible = false;
 
             warrior.position = new BABYLON.Vector3(5, 0, 0);
 
@@ -119,6 +122,12 @@ const movement = game.movement;
 
 engine.runRenderLoop(() => {
     movement.update();
+    if (game.player.model) {
+
+        game.player.model.position.copyFrom(game.player.mesh.position);
+
+    }
+    
     scene.render();
 
     document.getElementById('fps').textContent =

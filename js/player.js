@@ -52,6 +52,8 @@ class Player {
         this.mana = 100;
         this.level = 1;
 
+        this.model = null;
+
     }
 
 }
