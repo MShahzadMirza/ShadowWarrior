@@ -130,8 +130,9 @@ engine.runRenderLoop(() => {
     movement.update();
 
     if (player.model) {
-        player.model.position.copyFrom(player.mesh.position);
-    }
+    player.model.position.copyFrom(player.mesh.position);
+    player.model.rotation.y = player.mesh.rotation.y;
+}
 
     const target = player.mesh.position.clone();
     target.y += 1.2;
