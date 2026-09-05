@@ -34,6 +34,8 @@ const createScene = () => {
     );
 
     camera.attachControl(canvas, true);
+    // Disable Babylon keyboard controls
+    camera.inputs.removeByType("ArcRotateCameraKeyboardMoveInput");
 
     camera.lowerRadiusLimit = 10;
     camera.upperRadiusLimit = 80;
@@ -94,7 +96,7 @@ const createScene = () => {
             player.model = warrior;
             player.mesh.isVisible = false;
 
-            warrior.position = new BABYLON.Vector3(5, 0, 0);
+            warrior.position.copyFrom(player.mesh.position);
 
             warrior.scaling = new BABYLON.Vector3(1, 1, 1);
 
@@ -107,6 +109,7 @@ const createScene = () => {
         scene,
         player,
         movement,
+        camera,
     };
 };
 
@@ -114,24 +117,32 @@ const createScene = () => {
 const game = createScene();
 
 const scene = game.scene;
+const player = game.player;
 const movement = game.movement;
+const camera = game.camera;
 
 // =========================================
 // Render Loop
 // =========================================
 
 engine.runRenderLoop(() => {
+
     movement.update();
-    if (game.player.model) {
 
-        game.player.model.position.copyFrom(game.player.mesh.position);
-
+    if (player.model) {
+        player.model.position.copyFrom(player.mesh.position);
     }
-    
+
+    const target = player.mesh.position.clone();
+    target.y += 1.2;
+
+    camera.target.copyFrom(target);
+
     scene.render();
 
-    document.getElementById('fps').textContent =
-        'FPS: ' + Math.round(engine.getFps());
+    document.getElementById("fps").textContent =
+        "FPS: " + Math.round(engine.getFps());
+
 });
 
 // =========================================

@@ -22,6 +22,8 @@ class MovementController {
 
     update() {
 
+        console.log(this.keys);
+
         let x = 0;
         let z = 0;
 
@@ -44,7 +46,7 @@ class MovementController {
 
             direction.scaleInPlace(this.player.currentSpeed);
 
-            this.player.mesh.moveWithCollisions(direction);
+            this.player.mesh.position.addInPlace(direction);
 
             // Face movement direction
 
