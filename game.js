@@ -24,23 +24,9 @@ const createScene = () => {
     // Camera
     // =====================================
 
-    const camera = new BABYLON.FollowCamera(
-    'camera',
-    new BABYLON.Vector3(0, 5, -10),
-    scene
-);
+    
 
-camera.lockedTarget = player.mesh;
-camera.radius = 8;
-camera.heightOffset = 3;
-camera.rotationOffset = 180;
-
-    camera.attachControl(canvas, true);
-    // Disable Babylon keyboard controls
-    camera.inputs.removeByType("ArcRotateCameraKeyboardMoveInput");
-
-    camera.lowerRadiusLimit = 10;
-    camera.upperRadiusLimit = 80;
+    
 
     // =====================================
     // Lighting
@@ -85,7 +71,21 @@ camera.rotationOffset = 180;
 
     ground.material = groundMaterial;
     const player = new Player(scene);
+// =====================================
+// Camera
+// =====================================
 
+const camera = new BABYLON.FollowCamera(
+    'camera',
+    new BABYLON.Vector3(0, 5, -10),
+    scene
+);
+
+camera.lockedTarget = player.mesh;
+
+camera.radius = 8;
+camera.heightOffset = 3;
+camera.rotationOffset = 180;
     BABYLON.SceneLoader.ImportMesh(
         "",
         "assets/models/",
@@ -136,11 +136,7 @@ engine.runRenderLoop(() => {
     player.model.rotation.y = player.mesh.rotation.y;
 }
 
-    const target = player.mesh.position.clone();
-    target.y += 1.2;
-
-    camera.target.copyFrom(target);
-
+    
     scene.render();
 
     document.getElementById("fps").textContent =
