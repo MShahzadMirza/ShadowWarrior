@@ -24,14 +24,16 @@ const createScene = () => {
     // Camera
     // =====================================
 
-    const camera = new BABYLON.ArcRotateCamera(
-        'camera',
-        -Math.PI / 2,
-        Math.PI / 3,
-        40,
-        new BABYLON.Vector3(0, 5, 0),
-        scene,
-    );
+    const camera = new BABYLON.FollowCamera(
+    'camera',
+    new BABYLON.Vector3(0, 5, -10),
+    scene
+);
+
+camera.lockedTarget = player.mesh;
+camera.radius = 8;
+camera.heightOffset = 3;
+camera.rotationOffset = 180;
 
     camera.attachControl(canvas, true);
     // Disable Babylon keyboard controls
