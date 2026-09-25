@@ -24,9 +24,9 @@ const createScene = () => {
     // Camera
     // =====================================
 
-    
 
-    
+
+
 
     // =====================================
     // Lighting
@@ -71,21 +71,22 @@ const createScene = () => {
 
     ground.material = groundMaterial;
     const player = new Player(scene);
-// =====================================
-// Camera
-// =====================================
+    // =====================================
+    // Camera
+    // =====================================
 
-const camera = new BABYLON.FollowCamera(
-    'camera',
-    new BABYLON.Vector3(0, 5, -10),
-    scene
-);
+    const camera = new BABYLON.FollowCamera(
+        'camera',
+        new BABYLON.Vector3(0, 5, -10),
+        scene
+    );
 
-camera.lockedTarget = player.mesh;
+    camera.lockedTarget = player.mesh;
 
-camera.radius = 8;
-camera.heightOffset = 3;
-camera.rotationOffset = 180;
+    camera.radius = 8;
+    camera.heightOffset = 3;
+    camera.rotationOffset = 180;
+    camera.attachControl(canvas, true);
     BABYLON.SceneLoader.ImportMesh(
         "",
         "assets/models/",
@@ -105,7 +106,7 @@ camera.rotationOffset = 180;
             console.log("Warrior Loaded!");
         }
     );
-    const movement = new MovementController(player);
+    const movement = new MovementController(player, camera);
 
     return {
         scene,
@@ -132,11 +133,11 @@ engine.runRenderLoop(() => {
     movement.update();
 
     if (player.model) {
-    player.model.position.copyFrom(player.mesh.position);
-    player.model.rotation.y = player.mesh.rotation.y;
-}
+        player.model.position.copyFrom(player.mesh.position);
+        player.model.rotation.y = player.mesh.rotation.y;
+    }
 
-    
+
     scene.render();
 
     document.getElementById("fps").textContent =

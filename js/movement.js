@@ -1,9 +1,9 @@
 class MovementController {
 
-    constructor(player) {
+    constructor(player, camera) {
 
         this.player = player;
-
+        this.camera = camera;
         this.keys = {};
 
         window.addEventListener("keydown", (e) => {
@@ -40,7 +40,20 @@ class MovementController {
 
         if (x !== 0 || z !== 0) {
 
-            const direction = new BABYLON.Vector3(x, 0, z);
+            // Get camera direction
+            const forward = this.camera.getForwardRay().direction;
+            forward.y = 0;
+            forward.normalize();
+
+            // Get camera right direction
+            const right = new BABYLON.Vector3(
+                forward.z,
+                0,
+                -forward.x
+            );
+
+            // Create movement direction
+            const direction = forward.scale(z).add(right.scale(x));
 
             direction.normalize();
 
